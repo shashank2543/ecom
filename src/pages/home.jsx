@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import Product from "../page_components/home/component/Product";
+import ProductCard from "../modules/itemCard/productCard";
 import { connect } from 'react-redux';
 import { setProducts } from '../actions/productAction'
 import { addToCart, removeFromCart } from "../actions/cartActions";
@@ -17,7 +17,7 @@ const Home = (props) => {
 
             <div className="container">
                 <div className="row">
-                    {productList && productList.map((product) => <Product addToCart={addToCart} removeFromCart={removeFromCart} key={product.key} product={product} inCart={cartItems[product.id] ? true : false} />)}
+                    {productList && productList.map((product) => <ProductCard addToCart={addToCart} removeFromCart={removeFromCart} key={product.key} product={product} inCart={cartItems[product.id] ? true : false} />)}
                 </div>
 
             </div>

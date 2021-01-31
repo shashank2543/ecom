@@ -1,7 +1,8 @@
-import React from "react";
+import React, { Fragment } from "react";
 import styled from "styled-components";
+import "./style.scss"
 
-const Product = (props) => {
+const ProductCard = (props) => {
   const { product, addToCart, removeFromCart, inCart } = props;
   const remove = () => {
     return (
@@ -10,24 +11,24 @@ const Product = (props) => {
         onClick={(e) => handleRemove()}
         className="btn btn-success"
       >
-        {" "}
         Remove From Cart
       </button>
     );
   };
 
-  function add() {
-    return (
-      <button
-        type="button"
-        onClick={(e) => handleClick()}
-        className="btn btn-success"
-      >
-        {" "}
+  const add =
+    () => {
+      return (
+        <button
+          type="button"
+          onClick={(e) => handleClick()}
+          className="btn btn-success"
+        >
+          {" "}
         Add To Cart
-      </button>
-    );
-  }
+        </button>
+      );
+    }
 
   const handleClick = () => {
     addToCart(product);
@@ -35,6 +36,11 @@ const Product = (props) => {
 
   const handleRemove = () => {
     removeFromCart(product);
+  };
+
+  const calculateDiscount = (actualPrice, discountPrice) => {
+    let percent = ((actualPrice - discountPrice) / actualPrice) * 100;
+    return parseInt(percent)
   };
 
   return (
@@ -51,7 +57,13 @@ const Product = (props) => {
         <ul class="list-group list-group-flush">
           <li className="list-group-item">Company : {product.company}</li>
           <li className="list-group-item">Model: {product.title}</li>
-          <li className="list-group-item">Price : {product.price}</li>
+          <li className="list-group-item">Price : <span>&#8377;</span>{product.price}
+            {product.actualPrice > product.price && (
+              <Fragment>
+                <span className="actual-price"> <span>&#8377;</span>{product.actualPrice}</span>
+                <span className="discount-percent">{`${calculateDiscount(product.actualPrice, product.price)} % Off`}</span>
+              </Fragment>)}
+          </li>
         </ul>
         {!inCart ? add(product) : remove(product)}
       </div>
@@ -59,7 +71,7 @@ const Product = (props) => {
   );
 };
 
-export default Product;
+export default ProductCard;
 
 export const ProductWrapper = styled.div`
   .card {

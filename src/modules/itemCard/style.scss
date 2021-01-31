@@ -1,0 +1,49 @@
+.cart-container {
+  width: 100%;
+  height: 270px;
+  border-bottom: 2px solid black;
+
+  .product-overview {
+    display: flex;
+    align-items: flex-start;
+    .product-img {
+      margin: 20px;
+      width: 112px;
+      height: 90px;
+      align-items: center;
+    }
+    .product-desc {
+      margin: 20px;
+    }
+  }
+
+  .btn-wrapper {
+    width: 40px;
+  }
+  .count {
+    padding: 8px 20px 8px 20px;
+    border: 1px solid #c2c2c2;
+  }
+  .change-quantity {
+    margin: 20px;
+  }
+  .btn-remove {
+    width: auto;
+    margin: 20px;
+  }
+}
+
+.actual-price {
+    color: #878787;
+    text-decoration: line-through;
+    font-size: 14px;
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+  .discount-percent {
+    font-weight: 500;
+    color: #388e3c;
+    font-size: 14px;
+    margin-right: 10px;
+    
+  }

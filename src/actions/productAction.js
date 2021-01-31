@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, ADD_TO_CART, REMOVE_FROM_CART, CHANGE_QUANTITY } from './types';
+import { ADD_PRODUCT } from './types';
 
 export const setProducts = (productList) => dispatch => {
 

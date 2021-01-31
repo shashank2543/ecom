@@ -9,7 +9,7 @@ const Login = ({ loginUser, isLoggedin }) => {
 
   useEffect(() => {
     if (isLoggedin) {
-      history.push("/");
+      history.goBack();
     }
   }, [isLoggedin]);
 

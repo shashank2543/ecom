@@ -1,68 +1,31 @@
-import React, { useState } from 'react'
-import Product from "../page_components/home/component/Product";
-import { Modal } from "react-bootstrap"
+import React, { Fragment } from 'react'
 import { connect } from 'react-redux';
+import CartView from '../page_components/cart/component/cartView';
+import { changeQuantity, removeFromCart, placeOrder } from '../actions/cartActions';
+import { useHistory } from "react-router-dom";
 
 const Cart = (props) => {
-  const { productList, isLoggedin } = props;
-  var [show, setShow] = useState(false);
-
-  function ModalPopUp() {
+  const history = useHistory();
+  const { isLoggedin, changeQuantity, cartItems, removeFromCart, placeOrder } = props;
+  const placeOrderCb = () => {
     if (isLoggedin) {
-      return <Modal show={show}>
-        <Modal.Body>Your order has been placed</Modal.Body>
-        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setShow(false)}>Close</button>
-      </Modal>
+      placeOrder();
+    } else {
+      history.push('/login')
     }
-    else {
-      return <Modal show={show}>
-        <Modal.Body>Please Login before Buying Products</Modal.Body>
-        <button type="button" className="btn btn-secondary" data-dismiss="modal" onClick={() => setShow(false)}>Close</button>
-      </Modal>
-
-    }
-
   }
-
-  function BuyNow() {
-    return <button type="button" onClick={e => handleClick()} className="btn btn-success text-center"> Buy All Products</button>;
-  }
-
-
-  const handleClick = () => {
-    setShow(true);
-  }
-
-
   return (
-    <React.Fragment>
-
-      <div className="container">
-        <div className="text-center">
-          {BuyNow()}
-          {ModalPopUp()}
-        </div>
-        <div className="row">
-          {productList && productList.map((product) => {
-            if (product.inCart) {
-              return (
-                <Product  product={product} />)
-            }
-            return null;
-          })}
-        </div>
-
-      </div>
-
-    </React.Fragment>
+    <Fragment>
+      <CartView cartItems={cartItems} changeQuantity={changeQuantity} removeFromCart={removeFromCart} placeOrder={placeOrderCb}/>
+    </Fragment>
   )
 }
 
 
 const mapStateToProps = state => ({
-  productList: state.product.productList,
+  cartItems: state.cart.cartItems,
   isLoggedin: state.auth.isLoggedin
 });
 
 
-export default connect(mapStateToProps, null)(Cart);
+export default connect(mapStateToProps, { changeQuantity, removeFromCart, placeOrder })(Cart);
